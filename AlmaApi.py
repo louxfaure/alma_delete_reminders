@@ -28,7 +28,7 @@ FORMATS = {
 
 RESOURCES = {
     'reminders' : 'bibs/{bib_id}/reminders/{reminder_id}',
-    'get_reminders' : 'bibs/{bib_id}/reminders?type={type}',
+    'get_reminders' : 'bibs/{bib_id}/reminders',
 }
 
 NS = {'sru': 'http://www.loc.gov/zing/srw/',
@@ -138,19 +138,17 @@ class AlmaRecords(object):
             return response.content.decode('utf-8')
     
     
-    def get_reminder_id(self, bib_id, reminder_type, accept='json'):
+    def get_reminder_id(self, bib_id, accept='json'):
         """Retourne la liste des identifiants des reminders liés à une notice
         Args:
             mms_id ([type]): [description]
-            reminder_type
             accept (str, optional): [description]. Defaults to 'json'.
 
         Returns:
             [array]: [description]
         """
         status,response = self.request('GET', 'get_reminders',
-                                {   'bib_id' : bib_id,
-                                    'type'  : reminder_type
+                                {   'bib_id' : bib_id
                                 },
                                 accept=accept)
         if status == 'Error':
